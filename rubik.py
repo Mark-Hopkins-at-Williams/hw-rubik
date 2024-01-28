@@ -33,7 +33,7 @@ def encode(rubik):
     e.g. encode(RUBIKS_CUBE) = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     
     """
-    raise NotImplementedError('Exercise 1.')
+    raise NotImplementedError('Question 1.')
 
 
 def flip_away(rubik):
@@ -48,7 +48,7 @@ def flip_away(rubik):
     input tensor.
     
     """
-    raise NotImplementedError('Exercise 2.')
+    raise NotImplementedError('Question 2.')
 
 
 def twist_right(rubik):
@@ -62,7 +62,7 @@ def twist_right(rubik):
     should not modify the input tensor.
     
     """
-    raise NotImplementedError('Exercise 3.')
+    raise NotImplementedError('Question 3.')
 
 
 def rotate_right(rubik):
@@ -75,7 +75,7 @@ def rotate_right(rubik):
     should not modify the input tensor.
     
     """
-    raise NotImplementedError('Exercise 4.')
+    raise NotImplementedError('Question 4.')
 
 
 def answer():
