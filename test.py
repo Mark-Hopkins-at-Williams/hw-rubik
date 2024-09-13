@@ -2,11 +2,26 @@ import torch
 import unittest
 from rubik import encode, twist_right, rotate_right, flip_away, RUBIKS_CUBE
 
+def compare_tensors(expected, actual):
+    if expected.shape != actual.shape:
+        msg = f"\nExpected tensor of shape: {expected.shape}\n"
+        msg += f"Actual tensor had shape:  {actual.shape}\n"
+        raise Exception(msg)
+    else:
+        if not torch.all(expected.eq(actual)):
+            msg = f"\nExpected:\n{expected}\n\nActual:\n{actual}"
+            raise Exception(msg)
+
 class Q1(unittest.TestCase):
 
-    def test_encode(self):
+    def test_encode1(self):
         expected = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' 
         assert encode(RUBIKS_CUBE) == expected, 'encode test failed!'
+
+    def test_encode2(self):
+        expected = 'XYZUVWRSTOPQMNJKLGHIDEFABC'
+        assert encode(RUBIKS_CUBE.flip(dims=[0,1])) == expected, 'encode test failed!'
+
 
 class Q2(unittest.TestCase):
 
@@ -22,7 +37,7 @@ class Q2(unittest.TestCase):
                                        [[ 1,  2,  3],
                                         [10, 11, 12],
                                         [18, 19, 20]]])
-        assert encode(flip_away(RUBIKS_CUBE)) == encode(desired_result), 'flip away test failed!'
+        compare_tensors(flip_away(RUBIKS_CUBE), desired_result), 'flip away test failed!'
 
     def test_flip_away_immutability(self):
         flipped = flip_away(RUBIKS_CUBE)
@@ -61,7 +76,7 @@ class Q3(unittest.TestCase):
                                        [[18, 19, 20],
                                         [21, 22, 23],
                                         [24, 25, 26]]])
-        assert encode(twist_right(RUBIKS_CUBE)) == encode(desired_result), 'twist right test failed!'
+        compare_tensors(twist_right(RUBIKS_CUBE), desired_result), 'twist right test failed!'
 
     def test_twist_right_immutability(self):
         flipped = twist_right(RUBIKS_CUBE)
@@ -98,7 +113,7 @@ class Q4(unittest.TestCase):
                                         [[24, 21, 18],
                                          [25, 22, 19],
                                          [26, 23, 20]]])
-        assert encode(rotate_right(RUBIKS_CUBE)) == encode(desired_result), 'rotate right test failed!'
+        compare_tensors(rotate_right(RUBIKS_CUBE), desired_result)
 
     def test_rotate_right_immutability(self):
         flipped = rotate_right(RUBIKS_CUBE)
